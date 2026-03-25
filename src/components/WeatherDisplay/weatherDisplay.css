@@ -4,6 +4,7 @@ a {
 }
 
 .weatherCard {
+  grid-area: 2 / 1 / 3 / 2; 
   padding: 1rem;
   border: 1px solid var(--border);
   border-radius: 16px;

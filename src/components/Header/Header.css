@@ -1,0 +1,11 @@
+.header {
+  grid-area: 1 / 1 / 2 / 2;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  color: var(--text);
+}

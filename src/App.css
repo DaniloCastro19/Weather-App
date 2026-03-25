@@ -33,5 +33,6 @@ body {
   min-height: 100vh;
   display: grid;
   place-items: center;
-  padding: 1rem;
+  grid-template-columns: 1fr;
+  grid-template-rows: 4rem 1fr 4rem;
 }
