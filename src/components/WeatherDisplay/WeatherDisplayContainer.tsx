@@ -1,23 +1,19 @@
-import type { GeoLocationInfo } from "../../models/WeatherModels";
-import useWheaterInfo from "../../hooks/useWheaterInfo";
-import './weatherDisplay.css';
+import type { WeatherInfo } from "../../models/WeatherModels";
+import "./weatherDisplay.css";
 
-export default function WeatherDisplay({
-  country,
-  state,
-  lat,
-  lon,
-}: GeoLocationInfo) {
-  const { weatherInfo } = useWheaterInfo({ lat, lon });
+interface WeatherDisplayProps {
+  weatherInfo: WeatherInfo;
+}
 
+export default function WeatherDisplay({ weatherInfo }: WeatherDisplayProps) {
   return (
     <div className="weatherCard">
-      <h1>{country}</h1>
-      <h2>{state}</h2>
+      <h1>{weatherInfo.country}</h1>
+      <h2>{weatherInfo.state}</h2>
       <h3>Main weather: {weatherInfo.main}</h3>
       <p>{weatherInfo.description}</p>
       <small>
-        Latitude: {lat} | Longitude: {lon}
+        Latitude: {weatherInfo.lat} | Longitude: {weatherInfo.lon}
       </small>
     </div>
   );

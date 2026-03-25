@@ -1,9 +1,12 @@
-import WeatherDisplay from "../WeatherDisplay/WeatherDisplayContainer";
-import useSearchBar from "../../hooks/useSearchBar";
 import "./searchBar.css";
 
-export default function SearchBar() {
-  const { searchValue, setSearch, geoLocationInfo } = useSearchBar();
+type SearchBarProps = {
+  searchValue: string;
+  setSearch: (value: string) => void;
+};
+
+export default function SearchBar({ searchValue, setSearch }: SearchBarProps) {
+  // const { searchValue, setSearch, geoLocationInfo } = useSearchBar();
   return (
     <>
       <input
@@ -12,7 +15,12 @@ export default function SearchBar() {
         value={searchValue}
         onChange={(e) => setSearch(e.target.value)}
       />
-      {geoLocationInfo.length > 0 ? (
+    </>
+  );
+}
+
+{
+  /* {geoLocationInfo.length > 0 ? (
         <WeatherDisplay
           country={geoLocationInfo[0].country}
           state={geoLocationInfo[0].state}
@@ -21,7 +29,5 @@ export default function SearchBar() {
         />
       ) : (
         <h2>Type a location to search</h2>
-      )}
-    </>
-  );
+      )} */
 }
