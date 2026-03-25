@@ -7,5 +7,10 @@ export interface GeoLocationInfo {
 
 export interface WeatherInfo extends GeoLocationInfo {
     main: string; 
-    description: string; 
+    description: string;
+    temperature: number;
+    feels_like: number;
+    temp_min: number;
+    temp_max: number;
+    humidity: number;
 }

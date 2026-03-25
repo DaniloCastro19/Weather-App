@@ -1,0 +1,22 @@
+.weatherDetailsCard {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.weatherDetailsCard h2 {
+  margin: 0;
+  padding: 0;
+  font-size: 1.5em;
+  color: var(--text);
+}
+
+
+.weatherDetailsCard p {
+  margin: 0.5rem 0;
+  color: var(--text);
+}

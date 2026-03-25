@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import type { GeoLocationInfo, WeatherInfo } from "../models/WeatherModels";
 import { env } from "../env/environment.development";
+import useDebounce from "./useDebounce";
 
 export default function useSearchBar() {
   const [searchValue, setSearch] = useState("");
@@ -15,13 +16,20 @@ export default function useSearchBar() {
     ...geoLocationInfo,
     main: "",
     description: "",
+    temperature: 0,
+    feels_like: 0,
+    temp_min: 0,
+    temp_max: 0,
+    humidity: 0,
   });
+
+  const debouncedSearchValue = useDebounce<string>(searchValue, 500);
 
   useEffect(() => {
     const getLocation = async () => {
       try {
         const locationsResponse = await fetch(
-          `${env.GeoLocalizationURL}?q=${searchValue}&limit=${1}&${env.APIKeyPrefix}`,
+          `${env.GeoLocalizationURL}?q=${debouncedSearchValue}&limit=${1}&${env.APIKeyPrefix}`,
         );
 
         if (!locationsResponse.ok) {
@@ -32,17 +40,24 @@ export default function useSearchBar() {
         setGeoLocation(locations[0]);
 
         const locationWeatherResponse = await fetch(
-          `${env.WeatherLocationinfo}?lat=${geoLocationInfo?.lat}&lon=${geoLocationInfo?.lon}&${env.APIKeyPrefix}`,
+          `${env.WeatherLocationinfo}?lat=${geoLocationInfo.lat}&lon=${geoLocationInfo.lon}&units=metric&${env.APIKeyPrefix}`,
         );
         if (!locationWeatherResponse.ok) {
           throw new Error("Error fetching location weather.");
         }
 
         const weatherResults = await locationWeatherResponse.json();
+        console.log("Location weather info: ", weatherResults);
+
         const weatherInfo: WeatherInfo = {
           ...locations[0],
           main: weatherResults.weather[0].main,
           description: weatherResults.weather[0].description,
+          temperature: weatherResults.main.temp,
+          feels_like: weatherResults.main.feels_like,
+          temp_min: weatherResults.main.temp_min,
+          temp_max: weatherResults.main.temp_max,
+          humidity: weatherResults.main.humidity,
         };
 
         setWeatherInfo(weatherInfo);
@@ -51,12 +66,11 @@ export default function useSearchBar() {
       }
     };
     getLocation();
-  }, [searchValue]);
+  }, [debouncedSearchValue]);
 
   return {
     searchValue,
     setSearch,
     weatherInfo,
-    // geoLocationInfo,
   };
 }
