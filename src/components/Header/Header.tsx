@@ -3,11 +3,11 @@ import "./Header.css";
 
 export default function Header() {
   return (
-    <header className="header">
+    <div className="header">
       <nav className="navbar">
-        <Link to="/">Weather App</Link>
-        <Link to="/about">About</Link>
+        <Link to="/"><p className="pageTitle">Weather App</p></Link>
+        <Link to="/about"><p className="aboutLink">About</p></Link>
       </nav>
-    </header>
+    </div>
   );
 }
