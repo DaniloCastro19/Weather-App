@@ -5,24 +5,32 @@ import "./weatherDisplay.css";
 interface WeatherDisplayProps {
   weatherInfo: WeatherInfo;
   city: string;
+  isLoading?: boolean;
 }
 
 export default function WeatherDisplay({
   weatherInfo,
   city,
+  isLoading = false,
 }: WeatherDisplayProps) {
   return (
-    <Link to={`/forecast/${city}`}>
-      <div className="weatherCard">
-        <h2>
-          {weatherInfo.country} - {weatherInfo.state}
-        </h2>
-        <h3>Main weather: {weatherInfo.main}</h3>
-        <p>{weatherInfo.description}</p>
-        <small>
-          Latitude: {weatherInfo.lat} | Longitude: {weatherInfo.lon}
-        </small>
-      </div>
-    </Link>
+    <>
+      {isLoading ? (
+        <p>Loading...</p>
+      ) : (
+      <Link to={`/forecast/${city}`}>
+        <div className="weatherCard">
+          <h2>
+            {weatherInfo.country} - {weatherInfo.state}
+          </h2>
+          <h3>Main weather: {weatherInfo.main}</h3>
+          <p>{weatherInfo.description}</p>
+          <small>
+            Latitude: {weatherInfo.lat} | Longitude: {weatherInfo.lon}
+          </small>
+        </div>
+      </Link>
+      )}
+    </>
   );
 }

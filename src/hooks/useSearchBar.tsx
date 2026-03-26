@@ -5,6 +5,8 @@ import useDebounce from "./useDebounce";
 
 export default function useSearchBar() {
   const [searchValue, setSearch] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [geoLocationInfo, setGeoLocation] = useState<GeoLocationInfo>({
     country: "",
     lat: 0,
@@ -28,6 +30,11 @@ export default function useSearchBar() {
   useEffect(() => {
     const getLocation = async () => {
       try {
+        if (debouncedSearchValue.trim() === "") {
+          return;
+        }
+        setLoading(true);
+        setError(null);
         const locationsResponse = await fetch(
           `${env.GeoLocalizationURL}?q=${debouncedSearchValue}&limit=${1}&${env.APIKeyPrefix}`,
         );
@@ -63,6 +70,9 @@ export default function useSearchBar() {
         setWeatherInfo(weatherInfo);
       } catch (error) {
         console.error(error);
+        setError("Failed to fetch weather information. Please try again.");
+      } finally {
+        setLoading(false);
       }
     };
     getLocation();
@@ -72,5 +82,7 @@ export default function useSearchBar() {
     searchValue,
     setSearch,
     weatherInfo,
+    loading,
+    error,
   };
 }
