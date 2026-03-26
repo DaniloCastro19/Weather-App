@@ -1,23 +1,27 @@
+import { Suspense, lazy } from "react";
 import { Routes, Route } from "react-router-dom";
 import "./App.css";
 import { ThemeProvider } from "./context/ThemeContext";
-import Home from "./components/Home/Home";
-import WeatherDetails from "./components/WeatherDetails/WeatherDetails";
 import ThemeToggleBtn from "./components/ThemeToggleBtn/ThemeToggleBtn";
 import Header from "./components/Header/Header";
-import About from "./components/About/About";
+
+const HomePage = lazy(() => import("./components/Home/Home"));
+const WeatherDetailsPage = lazy(() => import("./components/WeatherDetails/WeatherDetails"));
+const AboutPage = lazy(() => import("./components/About/About"));
 
 function App() {
   return (
-    <ThemeProvider>
-      <Header />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/forecast/:city" element={<WeatherDetails />} />
-        <Route path="/about" element={<About />} />
-      </Routes>
-      <ThemeToggleBtn />
-    </ThemeProvider>
+    <Suspense fallback={<p>Loading...</p>}>
+      <ThemeProvider>
+        <Header />
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/forecast/:city" element={<WeatherDetailsPage />} />
+          <Route path="/about" element={<AboutPage />} />
+        </Routes>
+        <ThemeToggleBtn />
+      </ThemeProvider>
+    </Suspense>
   );
 }
 
