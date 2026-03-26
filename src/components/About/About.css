@@ -1,0 +1,19 @@
+.aboutSection {
+  grid-area: 2 / 1 / 3 / 2;
+  padding: 5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+h1 {
+  color: var(--accent);
+  margin-bottom: 20px;
+}
+
+p {
+  font-size: 1.2rem;
+  color: var(--text);
+  line-height: 1.6;
+}

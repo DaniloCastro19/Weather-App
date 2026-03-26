@@ -12,7 +12,7 @@ export default function SearchBar({ searchValue, setSearch }: SearchBarProps) {
         type="text"
         placeholder="Search Location"
         value={searchValue}
-        onChange={(e) => setSearch(e.target.value)}
+        onChange={(e) => setSearch(e.target.value.trim())}
       />
     </>
   );
